@@ -1,3 +1,5 @@
 {
-  "stage": 0
+  "whitelist": [
+    "es6.modules"
+  ]
 }
