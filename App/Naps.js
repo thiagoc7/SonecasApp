@@ -27,6 +27,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: 'rgba(34,34,34,0.5)',
+  },
+
+  createButton: {
+    backgroundColor: 'rgba(34,34,34,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    width: 150,
+    borderRadius: 3
+  },
+
+  createText: {
+    color: 'rgba(231, 231, 231, 0.8)',
+    fontSize: 15,
+    fontWeight: 'bold',
   }
 });
 
@@ -90,9 +105,17 @@ export default class Naps extends Component {
             {this.state.pages.map((page, idx) => this.renderPage(page,idx))}
 
             <View style={[styles.container, {width: this.props.width, height: this.props.height / 7 * 4}]}>
-              <TouchableHighlight onPress={this.onCreatePage.bind(this)}>
-                <Text>Criar</Text>
-              </TouchableHighlight>
+              <View style={[styles.card, {justifyContent: 'center'}]}>
+
+                <TouchableHighlight
+                    style={styles.createButton}
+                    activeOpacity={0.5}
+                    underlayColor='rgba(34,34,34,0.7)'
+                    onPress={this.onCreatePage.bind(this)}>
+                  <Text style={styles.createText}>Nova Soneca</Text>
+                </TouchableHighlight>
+
+              </View>
             </View>
 
           </Swipe>
@@ -102,9 +125,9 @@ export default class Naps extends Component {
               numberOfPages={this.state.pages.length + 1}
               currentPage={this.state.currentPage}
               hidesForSinglePage={true}
-              pageIndicatorTintColor={styles.card.backgroundColor}
+              pageIndicatorTintColor='rgba(151, 151, 151, 0.25)'
               indicatorSize={{width:5, height:5}}
-              currentPageIndicatorTintColor='rgba(151, 151, 151, 0.25)'
+              currentPageIndicatorTintColor='rgba(170, 170, 170, 0.75)'
           />
         </View>
     )

@@ -1,4 +1,5 @@
 import React from 'react-native';
+import moment from 'moment';
 
 const {
     Component,
@@ -15,7 +16,7 @@ let {
     height
     } = Dimensions.get('window');
 
-import Date from './Date'
+import DateControl from './DateControl'
 import Naps from './Naps'
 
 const styles = StyleSheet.create({
@@ -33,27 +34,39 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      date: 1
+      date: moment(),
+      naps: [1, 2, 3],
+      lastNap: moment(),
+      nextNapInterval: 40
     };
   }
 
-  onDateChange(number) {
-    this.setState({date: this.state.date + number})
+  onDateChange(newDate) {
+    this.setState({date: newDate})
+  }
+
+  onNapsChange(newNaps) {
+    this.setState({date: newNaps})
   }
 
   render() {
     return (
         <Image source={require('image!back-blue')} style={styles.container}>
-          <Date date={this.state.date}
-                width={width}
-                height={height}
-                onDateChange={this.onDateChange.bind(this)}
+          <DateControl
+              date={this.state.date}
+              lastNap={this.state.lastNap}
+              nextNapInterval={this.state.nextNapInterval}
+              width={width}
+              height={height}
+              onDateChange={this.onDateChange.bind(this)}
+              onNextNapIntervalChange={newInterval => this.setState({nextNapInterval: newInterval})}
           />
 
-          <Naps date={this.state.date}
-                width={width}
-                height={height}
-                onDateChange={this.onDateChange.bind(this)}
+          <Naps
+              naps={this.state.naps}
+              width={width}
+              height={height}
+              onDateChange={this.onNapsChange.bind(this)}
           />
         </Image>
     )
