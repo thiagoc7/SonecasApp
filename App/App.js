@@ -5,6 +5,7 @@ const {
     StyleSheet,
     Text,
     View,
+    Image,
     ListView,
     Dimensions,
     } = React;
@@ -15,13 +16,15 @@ let {
     } = Dimensions.get('window');
 
 import Date from './Date'
-import Nap from './Nap'
+import Naps from './Naps'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#F5FCFF',
+    width: null,
+    height: null,
+    backgroundColor: 'transparent'
   }
 });
 
@@ -40,19 +43,19 @@ export default class App extends Component {
 
   render() {
     return (
-        <View style={styles.container}>
+        <Image source={require('image!back-blue')} style={styles.container}>
           <Date date={this.state.date}
                 width={width}
                 height={height}
                 onDateChange={this.onDateChange.bind(this)}
           />
 
-          <Nap date={this.state.date}
+          <Naps date={this.state.date}
                 width={width}
                 height={height}
                 onDateChange={this.onDateChange.bind(this)}
           />
-        </View>
+        </Image>
     )
   }
 }

@@ -36,6 +36,7 @@ export default class Swipe extends Component {
             pagingEnabled={true}
             showsHorizontalScrollIndicator={false}
             contentOffset={{x: this.props.xOffset, y: 0}}
+            scrollEnabled={this.props.scrollEnabled}
             horizontal={true}>
           {this.props.children}
         </ScrollView>
@@ -45,5 +46,6 @@ export default class Swipe extends Component {
 
 Swipe.propTypes = {
   onScroll: React.PropTypes.func.isRequired,
-  xOffset: React.PropTypes.number
+  xOffset: React.PropTypes.number,
+  scrollEnabled: React.PropTypes.bool
 };
