@@ -1,23 +1,14 @@
-import React from 'react-native';
-import moment from 'moment';
+import React from 'react-native'
+import moment from 'moment'
 
 const {
     Component,
     StyleSheet,
-    Text,
-    View,
     Image,
-    ListView,
-    Dimensions,
     } = React;
 
-let {
-    width,
-    height
-    } = Dimensions.get('window');
-
-import DateControl from './DateControl'
-import Naps from './Naps'
+import SignIn from './SignIn'
+import MainSync from './MainSync'
 
 const styles = StyleSheet.create({
   container: {
@@ -34,49 +25,24 @@ export default class App extends Component {
     super(props);
 
     this.state = {
-      date: moment(),
-      naps: [1, 2, 3],
-      lastNap: moment(),
-      nextNapInterval: 40
+      user: null,
+      date: moment().format('YYYY-MM-DD')
     };
-  }
-
-  onDateChange(newDate) {
-    this.setState({date: newDate})
-  }
-
-  onNapsChange(newNaps) {
-    this.setState({date: newNaps})
   }
 
   render() {
     return (
         <Image source={require('image!back-blue')} style={styles.container}>
-          <DateControl
-              date={this.state.date}
-              lastNap={this.state.lastNap}
-              nextNapInterval={this.state.nextNapInterval}
-              width={width}
-              height={height}
-              onDateChange={this.onDateChange.bind(this)}
-              onNextNapIntervalChange={newInterval => this.setState({nextNapInterval: newInterval})}
-          />
-
-          <Naps
-              naps={this.state.naps}
-              width={width}
-              height={height}
-              onDateChange={this.onNapsChange.bind(this)}
-          />
+          {
+            this.state.user ?
+                <MainSync
+                    user={this.state.user}
+                    date={moment(this.state.date, 'YYYY-MM-DD')}
+                    onDateChange={date => this.setState({date: date.format('YYYY-MM-DD')})}
+                /> :
+                <SignIn onGetUser={user => this.setState({user: user})} />
+          }
         </Image>
     )
   }
 }
-
-App.propTypes = {
-  initialCount: React.PropTypes.number
-};
-
-App.defaultProps = {
-  initialCount: 0
-};

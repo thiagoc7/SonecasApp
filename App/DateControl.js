@@ -103,18 +103,18 @@ export default class DateControl extends Component {
   }
 
   renderNextNap() {
-    const nextNap = moment(this.props.lastNap).add(this.props.nextNapInterval, 'm')
+    const nextNap = moment.unix(this.props.userData.val().lastNap).add(this.props.userData.val().nextNapInterval, 'm')
 
     const swipeoutBtnsR = [
       {
         text: <Icon name="minus" size={30} color="rgba(217, 217, 217, 0.55)" />,
         backgroundColor: 'transparent',
-        onPress: () => this.props.onNextNapIntervalChange(this.props.nextNapInterval - 5)
+        onPress: () => this.props.onNextNapIntervalChange(this.props.userData.val().nextNapInterval - 5)
       },
       {
         text: <Icon name="plus" size={30} color="rgba(217, 217, 217, 0.55)" />,
         backgroundColor: 'transparent',
-        onPress: () => this.props.onNextNapIntervalChange(this.props.nextNapInterval + 5)
+        onPress: () => this.props.onNextNapIntervalChange(this.props.userData.val().nextNapInterval + 5)
       }
     ]
 
@@ -136,7 +136,7 @@ export default class DateControl extends Component {
               <Text style={styles.nextNapContainer}>
                 Próxima {nextNap.fromNow()}
               </Text>
-              <Text style={[styles.nextNapContainer, {fontSize: 12}]}>+ {this.props.nextNapInterval}min</Text>
+              <Text style={[styles.nextNapContainer, {fontSize: 12}]}>+ {this.props.userData.val().nextNapInterval}min</Text>
             </View>
           </Swipeout>
         </View>
@@ -146,8 +146,7 @@ export default class DateControl extends Component {
 
 DateControl.propTypes = {
   date: React.PropTypes.number.isRequired,
-  lastNap: React.PropTypes.object.isRequired,
-  nextNapInterval: React.PropTypes.number.isRequired,
+  userData: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
   height: React.PropTypes.number.isRequired,
   onDateChange: React.PropTypes.func.isRequired,
