@@ -3,26 +3,36 @@ import moment from 'moment'
 
 const {
     Component,
-    View,
+    StyleSheet,
+    Image,
     } = React;
 
 import SignIn from './SignIn'
 import MainSync from './MainSync'
-import Background from './components/Background'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    width: null,
+    height: null,
+    backgroundColor: 'transparent'
+  }
+});
 
 export default class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      user: 'user1',
+      user: 'user3',
       date: moment().format('YYYY-MM-DD')
     };
   }
 
   render() {
     return (
-        <Background>
+        <Image source={require('image!back-blue')} style={styles.container}>
           {
             this.state.user ?
                 <MainSync
@@ -32,7 +42,7 @@ export default class App extends Component {
                 /> :
                 <SignIn onGetUser={user => this.setState({user: user})} />
           }
-        </Background>
+        </Image>
     )
   }
 }

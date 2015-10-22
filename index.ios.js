@@ -8,8 +8,4 @@ var React = require('react-native');
 
 var App = require('./App/App');
 
-var {
-    AppRegistry,
-    } = React;
-
-AppRegistry.registerComponent('SonecasApp', () => App);
+React.AppRegistry.registerComponent('SonecasApp', () => App);

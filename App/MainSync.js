@@ -5,7 +5,6 @@ import moment from 'moment'
 const {
     Component,
     StyleSheet,
-    Text,
     View,
     ActivityIndicatorIOS,
     } = React;
@@ -28,37 +27,36 @@ export default class MainSync extends Component {
     this.firebaseRef = new Firebase("https://sonecas-app.firebaseio.com/users/" + this.props.user + "/");
 
     this.state = {
-      userData: null,
-      dateObj: null
+      settingsSnapshot: null,
+      dateSnapshot: null
     };
   }
 
   componentDidMount() {
-    this.findByDate()
-    this.getUserData()
+    this.getDateSnapshot()
+    this.getSettingsSnapshot()
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.date !== nextProps.date) {
-      this.findByDate(nextProps.date)
+      this.getDateSnapshot(nextProps.date)
     }
   }
 
-  findByDate() {
+  getDateSnapshot() {
     this.firebaseRef
         .child('dates')
         .child(moment(this.props.date).format('YYYY-MM-DD'))
-        //.child('naps')
         .on('value', result => {
-      this.setState({dateObj: result})
+      this.setState({dateSnapshot: result})
     })
   }
 
-  getUserData() {
-    this.firebaseRef.child('data').on('value', result => {
-      this.setState({userData: result})
-      if (!result.val()) {
-        this.firebaseRef.child('data').update({
+  getSettingsSnapshot() {
+    this.firebaseRef.child('settings').on('value', result => {
+      this.setState({settingsSnapshot: result})
+      if (!result.exists()) {
+        this.firebaseRef.child('settings').update({
           nextNapInterval: 60,
           lastNap: moment().subtract(20, 'm').unix()
         })
@@ -66,26 +64,8 @@ export default class MainSync extends Component {
     })
   }
 
-  onNextNapIntervalChange(newInterval) {
-    this.firebaseRef.child('data').update({nextNapInterval: newInterval})
-  }
-
-  onDateWakeUpChange(newValue) {
-    this.firebaseRef
-        .child('dates')
-        .child(moment(this.props.date).format('YYYY-MM-DD'))
-        .update({wakeUp: newValue}, () => this.onDateNapCreate({dumb: 1}))
-  }
-
-  onDateNapCreate(nap) {
-    this.firebaseRef
-        .child('dates')
-        .child(moment(this.props.date).format('YYYY-MM-DD'))
-        .child('naps').push(nap)
-  }
-
   render() {
-    if (!this.state.userData || !this.state.dateObj) {
+    if (!this.state.settingsSnapshot || !this.state.dateSnapshot) {
       return (
           <View style={styles.spinner}>
             <ActivityIndicatorIOS
@@ -98,17 +78,14 @@ export default class MainSync extends Component {
 
     return <MainPage
         {...this.props}
-        userData={this.state.userData}
-        dateObj={this.state.dateObj}
-        onNextNapIntervalChange={this.onNextNapIntervalChange.bind(this)}
-        onDateWakeUpChange={this.onDateWakeUpChange.bind(this)}
-        onDateNapCreate={this.onDateNapCreate.bind(this)}
+        settingsSnapshot={this.state.settingsSnapshot}
+        dateSnapshot={this.state.dateSnapshot}
     />
   }
 }
 
 MainSync.propTypes = {
-  user: React.PropTypes.object.isRequired,
-  date: React.PropTypes.string.isRequired,
+  user: React.PropTypes.string.isRequired,
+  date: React.PropTypes.object.isRequired,
   onDateChange: React.PropTypes.func.isRequired
 };
