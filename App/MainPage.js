@@ -41,18 +41,35 @@ export default class MainPage extends Component {
   }
 
   render() {
-    var { dateObj, ...others } = this.props;
+    var { dateObj,
+        onDateWakeUpChange,
+        onDateNapCreate,
+        ...others
+        } = this.props;
+
+    var pages = {};
+    var pageKeys = []
+
+    if (dateObj.val() && dateObj.val().naps) {
+      pages = dateObj.val().naps
+      pageKeys = Object.keys(dateObj.val().naps)
+    }
 
     return (
         <Image source={require('image!back-blue')} style={styles.container}>
           <DateControl
               {...others}
+              dateObj={dateObj}
               width={width}
               height={height}
           />
 
           <Naps
               dateObj={dateObj}
+              pages={pages}
+              pageKeys={pageKeys}
+              onDateWakeUpChange={onDateWakeUpChange}
+              onDateNapCreate={onDateNapCreate}
               width={width}
               height={height}
           />

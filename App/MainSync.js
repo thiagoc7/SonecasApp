@@ -34,7 +34,7 @@ export default class MainSync extends Component {
   }
 
   componentDidMount() {
-    this.findByDate(this.props.date)
+    this.findByDate()
     this.getUserData()
   }
 
@@ -44,8 +44,12 @@ export default class MainSync extends Component {
     }
   }
 
-  findByDate(date) {
-    this.firebaseRef.child('dates').child(moment(date).format('YYYY-MM-DD')).on('value', result => {
+  findByDate() {
+    this.firebaseRef
+        .child('dates')
+        .child(moment(this.props.date).format('YYYY-MM-DD'))
+        //.child('naps')
+        .on('value', result => {
       this.setState({dateObj: result})
     })
   }
@@ -60,6 +64,24 @@ export default class MainSync extends Component {
         })
       }
     })
+  }
+
+  onNextNapIntervalChange(newInterval) {
+    this.firebaseRef.child('data').update({nextNapInterval: newInterval})
+  }
+
+  onDateWakeUpChange(newValue) {
+    this.firebaseRef
+        .child('dates')
+        .child(moment(this.props.date).format('YYYY-MM-DD'))
+        .update({wakeUp: newValue}, () => this.onDateNapCreate({dumb: 1}))
+  }
+
+  onDateNapCreate(nap) {
+    this.firebaseRef
+        .child('dates')
+        .child(moment(this.props.date).format('YYYY-MM-DD'))
+        .child('naps').push(nap)
   }
 
   render() {
@@ -78,7 +100,9 @@ export default class MainSync extends Component {
         {...this.props}
         userData={this.state.userData}
         dateObj={this.state.dateObj}
-        onNextNapIntervalChange={newInterval => this.firebaseRef.child('data').update({nextNapInterval: newInterval})}
+        onNextNapIntervalChange={this.onNextNapIntervalChange.bind(this)}
+        onDateWakeUpChange={this.onDateWakeUpChange.bind(this)}
+        onDateNapCreate={this.onDateNapCreate.bind(this)}
     />
   }
 }

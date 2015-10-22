@@ -11,12 +11,11 @@ const {
 
 import Swipe from './Swipe';
 import Nap from './Nap';
+import NapWeakUp from './NapWeakUp'
 
 const styles = StyleSheet.create({
   container: {
     flex: 4,
-    //justifyContent: 'center',
-    //alignItems: 'center',
     backgroundColor: 'transparent'
   },
 
@@ -49,11 +48,8 @@ export default class Naps extends Component {
   constructor(props) {
     super(props);
 
-    const pages = [1, 2, 3]
-
     this.state = {
-      currentPage: pages.length - 1,
-      pages: pages,
+      currentPage: this.props.pageKeys.length - 1,
       scrollEnabled: true
     }
   }
@@ -71,11 +67,7 @@ export default class Naps extends Component {
   }
 
   onCreatePage() {
-    let pages = this.state.pages
-    const lastPage = pages.slice(-1)[0]
-    this.setState({
-      pages: [...pages, lastPage + 1]
-    })
+    this.props.onDateNapCreate({start: 1, end: 2})
   }
 
   renderPage(nap, idx) {
@@ -86,7 +78,19 @@ export default class Naps extends Component {
               width={this.props.width}
               scroll={e => this.setState({scrollEnabled: e})}
               key={idx}
-              nap={nap}
+              nap={idx}
+          />
+        </View>
+    )
+  }
+
+  renderWeakUp() {
+    return (
+        <View style={[styles.container, {width: this.props.width, height: this.props.height / 7 * 4}]}>
+          <NapWeakUp
+              style={styles.card}
+              width={this.props.width}
+              onDateWakeUpChange={this.props.onDateWakeUpChange}
           />
         </View>
     )
@@ -94,15 +98,23 @@ export default class Naps extends Component {
 
 
   render() {
+    let offSet = 0
+    if (this.props.pageKeys.length > 0) {
+      offSet = this.props.width * (this.props.pageKeys.length - 1)
+    }
+
     return (
         <View>
 
           <Swipe
               onScroll={this.onScroll.bind(this)}
               scrollEnabled={this.state.scrollEnabled}
-              xOffset={this.props.width * (this.state.pages.length - 1) }>
+              xOffset={offSet}>
 
-            {this.state.pages.map((page, idx) => this.renderPage(page,idx))}
+            {this.props.pageKeys.length > 0 ?
+                this.props.pageKeys.map((pageKey, idx) => this.renderPage(pageKey, idx)) :
+                this.renderWeakUp()
+            }
 
             <View style={[styles.container, {width: this.props.width, height: this.props.height / 7 * 4}]}>
               <View style={[styles.card, {justifyContent: 'center'}]}>
@@ -122,7 +134,7 @@ export default class Naps extends Component {
 
           <PageControl
               style={{position:'absolute', left:0, right:0, bottom:20}}
-              numberOfPages={this.state.pages.length + 1}
+              numberOfPages={this.props.pageKeys.length + 1}
               currentPage={this.state.currentPage}
               hidesForSinglePage={true}
               pageIndicatorTintColor='rgba(151, 151, 151, 0.25)'
@@ -135,8 +147,11 @@ export default class Naps extends Component {
 }
 
 Naps.propTypes = {
-  date: React.PropTypes.number.isRequired,
   width: React.PropTypes.number.isRequired,
   height: React.PropTypes.number.isRequired,
-  onDateChange: React.PropTypes.func.isRequired
+  dateObj: React.PropTypes.object.isRequired,
+  pages: React.PropTypes.object.isRequired,
+  pageKeys: React.PropTypes.array.isRequired,
+  onDateWakeUpChange: React.PropTypes.func.isRequired,
+  onDateNapCreate: React.PropTypes.func.isRequired
 };

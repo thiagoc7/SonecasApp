@@ -96,6 +96,10 @@ export default class DateControl extends Component {
               left={swipeoutBtnsL}>
             <View style={[styles.swipe, {width: this.props.width}]}>
               <Text style={styles.title}>{this.props.date.locale('pt-br', momentPtLocale).format('ddd, DD/MM/YYYY')}</Text>
+              {this.props.dateObj.val() && this.props.dateObj.val().wakeUp ?
+                  <Text style={[styles.title, {fontSize: 12}]}>Despertar {moment.unix(this.props.dateObj.val().wakeUp).format('HH:mm')}</Text> :
+                  undefined
+              }
             </View>
           </Swipeout>
         </View>
