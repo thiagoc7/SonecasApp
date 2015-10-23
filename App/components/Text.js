@@ -24,9 +24,8 @@ export default class TextContainer extends Component {
 }
 
 TextContainer.propTypes = {
-  children: React.PropTypes.array.isRequired,
   fontSize: React.PropTypes.number.isRequired,
-  fontWeight: React.PropTypes.number.isRequired
+  fontWeight: React.PropTypes.string.isRequired
 };
 
 TextContainer.defaultProps = {

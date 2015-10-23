@@ -58,7 +58,6 @@ export default class ButtonControl extends Component {
 }
 
 ButtonControl.propTypes = {
-  children: React.PropTypes.array.isRequired,
   onPress: React.PropTypes.func.isRequired,
   onPressPlus: React.PropTypes.func.isRequired,
   onPressMinus: React.PropTypes.func.isRequired,

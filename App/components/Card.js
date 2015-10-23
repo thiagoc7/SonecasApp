@@ -27,7 +27,3 @@ export default class Card extends Component {
     )
   }
 }
-
-Card.propTypes = {
-  children: React.PropTypes.array.isRequired
-};

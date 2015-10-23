@@ -57,7 +57,6 @@ export default class SlideControl extends Component {
 }
 
 SlideControl.propTypes = {
-  children: React.PropTypes.array.isRequired,
   onPressLeft: React.PropTypes.func.isRequired,
   onPressPlus: React.PropTypes.func.isRequired,
   onPressMinus: React.PropTypes.func.isRequired,

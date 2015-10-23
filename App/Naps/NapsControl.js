@@ -64,10 +64,10 @@ export default class NapsControl extends Component {
               xOffset={this.props.width * (this.props.dateSnapshot.child('naps').numChildren() - 1)}
           >
 
-            {this.getNaps().map(nap => {
+            {this.getNaps().map((nap, idx) => {
               return (
                   <View key={nap.key()} style={[styles.card, {width: this.props.width, height: this.props.height / 7 * 4}]}>
-                    <NapCard nap={nap}/>
+                    <NapCard napSnapshot={nap} idx={idx} width={this.props.width} />
                   </View>
               )
             })}

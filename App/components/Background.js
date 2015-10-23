@@ -30,5 +30,5 @@ export default class Background extends Component {
 }
 
 Background.propTypes = {
-  children: React.PropTypes.array.isRequired
+  children: React.PropTypes.object.isRequired
 };

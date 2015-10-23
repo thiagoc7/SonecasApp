@@ -78,10 +78,8 @@ export default class DateControl extends Component {
 }
 
 DateControl.propTypes = {
-  date: React.PropTypes.number.isRequired,
+  date: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
   settingsSnapshot: React.PropTypes.object.isRequired,
-  height: React.PropTypes.number.isRequired,
-  onDateChange: React.PropTypes.func.isRequired,
-  onNextNapIntervalChange: React.PropTypes.func.isRequired
+  onDateChange: React.PropTypes.func.isRequired
 };

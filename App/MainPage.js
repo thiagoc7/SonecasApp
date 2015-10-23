@@ -51,6 +51,6 @@ export default class MainPage extends Component {
 MainPage.propTypes = {
   date: React.PropTypes.object.isRequired,
   onDateChange: React.PropTypes.func.isRequired,
-  settingsSnapshot: React.PropTypes.func.isRequired,
-  dateSnapshot: React.PropTypes.func.isRequired
+  settingsSnapshot: React.PropTypes.object.isRequired,
+  dateSnapshot: React.PropTypes.object.isRequired
 };

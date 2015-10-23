@@ -7,18 +7,23 @@ const {
     } = React;
 
 import Card from './../components/Card'
-import Button from './../components/Button'
-import Text from './../components/Text'
+import NapCardTitle from './NapCardTitle'
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    backgroundColor: 'transparent'
+  }
+});
 
 export default class NapCard extends Component {
 
   render() {
     return (
         <Card>
-          <View>
-            <Button onPress={() => this.props.dateSnapshot.ref().child('naps').push({dumb: 1})}>
-              <Text>card</Text>
-            </Button>
+          <View style={styles.container}>
+            <NapCardTitle {...this.props}/>
           </View>
         </Card>
     )
@@ -26,5 +31,7 @@ export default class NapCard extends Component {
 }
 
 NapCard.propTypes = {
-  dateSnapshot: React.PropTypes.object.isRequired
+  napSnapshot: React.PropTypes.object.is,
+  idx: React.PropTypes.number.isRequired,
+  width: React.PropTypes.number.isRequired
 };
