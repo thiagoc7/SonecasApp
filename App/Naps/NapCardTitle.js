@@ -9,6 +9,7 @@ const {
 
 import Text from './../components/Text'
 import ButtonIcon from './../components/ButtonIcon'
+import NapCardComment from './NapCardComment'
 
 const styles = StyleSheet.create({
   container: {
@@ -28,9 +29,7 @@ export default class NapCardTitle extends Component {
           <Text fontSize={16}>Soneca {this.props.idx + 1}</Text>
           <Text fontSize={14} >{this.totalTime()}</Text>
 
-          <ButtonIcon underlayColor="transparent">
-            <Icon name="edit" size={20} color="rgba(217, 217, 217, 0.55)" />
-          </ButtonIcon>
+          <NapCardComment napSnapshot={this.props.napSnapshot}/>
 
         </View>
     )
