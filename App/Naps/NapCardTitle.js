@@ -29,7 +29,7 @@ export default class NapCardTitle extends Component {
           <Text fontSize={14} >{this.totalTime()}</Text>
 
           <ButtonIcon underlayColor="transparent">
-            <Icon name="ios-trash-outline" size={30} color="rgba(217, 217, 217, 0.55)" />
+            <Icon name="edit" size={20} color="rgba(217, 217, 217, 0.55)" />
           </ButtonIcon>
 
         </View>

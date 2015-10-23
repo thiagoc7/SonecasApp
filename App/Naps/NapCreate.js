@@ -1,4 +1,5 @@
 import React from 'react-native';
+import moment from 'moment';
 
 const {
     Component,
@@ -16,7 +17,11 @@ export default class NapCreate extends Component {
     return (
         <Card>
           <View>
-            <Button onPress={() => this.props.dateSnapshot.ref().child('naps').push({dumb: 1})}>
+            <Button onPress={() => this.props.dateSnapshot.ref().child('naps').push({
+                isSleeping: false,
+                lastTime: moment().unix()
+              })
+            }>
               <Text>Nova Soneca</Text>
             </Button>
           </View>
