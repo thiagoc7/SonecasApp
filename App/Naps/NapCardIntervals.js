@@ -5,6 +5,7 @@ const {
     Component,
     StyleSheet,
     View,
+    ScrollView,
     } = React;
 
 import Text from './../components/Text'
@@ -12,9 +13,13 @@ import Text from './../components/Text'
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
+    backgroundColor: 'transparent',
+    height: 70
+  },
+  contentContainer: {
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent'
+    alignItems: 'center'
   }
 });
 
@@ -22,9 +27,12 @@ export default class NapCardIntervals extends Component {
 
   render() {
     return (
-        <View style={[styles.container, {width: this.props.width}]}>
+        <ScrollView
+            showsVerticalScrollIndicator={false}
+            contentContainerStyle={styles.contentContainer}
+            style={[styles.container, {width: this.props.width}]}>
           {this.getIntervals().map((interval, idx) => this.renderText(interval.val(), idx))}
-        </View>
+        </ScrollView>
     )
   }
 

@@ -36,11 +36,12 @@ export default class NapCard extends Component {
               <NapCardActions
                   width={this.props.width}
                   napSnapshot={this.props.napSnapshot}
+                  settingsSnapshot={this.props.settingsSnapshot}
                   activeIntervalSnapshot={this.activeInterval()}
               />
             </View>
 
-            <View>
+            <View style={{marginTop: -10, marginBotton: -10}}>
               <NapCardIntervals
                   width={this.props.width}
                   napSnapshot={this.props.napSnapshot}

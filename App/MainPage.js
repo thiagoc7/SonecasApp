@@ -37,6 +37,7 @@ export default class MainPage extends Component {
           />
 
           <NapsControl
+              settingsSnapshot={this.props.settingsSnapshot}
               dateSnapshot={this.props.dateSnapshot}
               width={width}
               height={height}

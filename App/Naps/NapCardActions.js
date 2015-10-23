@@ -26,7 +26,7 @@ export default class NapCardActions extends Component {
     super(props);
 
     this.state = {
-      nextTime: moment.unix(this.props.napSnapshot.val().lastTime).add(40, 'm')
+      nextTime: moment()
     };
   }
 
@@ -34,11 +34,17 @@ export default class NapCardActions extends Component {
     const nextTime = this.state.nextTime.unix()
     if (this.props.activeIntervalSnapshot) {
       this.props.activeIntervalSnapshot.ref().update({end: nextTime})
-      this.props.napSnapshot.ref().update({lastTime: nextTime, isSleeping: false})
+      this.props.napSnapshot.ref().update({lastTime: nextTime, isSleeping: false}, () => this.setState({nextTime: this.calcNextTime()}))
+      this.props.settingsSnapshot.ref().update({lastNap: nextTime})
     } else {
       this.props.napSnapshot.ref().child('intervals').push({start: nextTime})
-      this.props.napSnapshot.ref().update({lastTime: nextTime, isSleeping: true})
+      this.props.napSnapshot.ref().update({lastTime: nextTime, isSleeping: true}, () => this.setState({nextTime: this.calcNextTime()}))
     }
+  }
+
+  calcNextTime() {
+    return moment.unix(this.props.napSnapshot.val().lastTime)
+        .add(this.props.settingsSnapshot.val().nextNapInterval, 'm')
   }
 
   render() {
@@ -56,10 +62,10 @@ export default class NapCardActions extends Component {
 
   renderText() {
     let text = "Dormiu"
-    let infoText = "Acordado"
+    let infoText = "Acordado há"
     if (this.props.napSnapshot.val().isSleeping) {
       text = "Acordou"
-      infoText = "Dormindo"
+      infoText = "Dormindo há"
     }
 
     const infoMin = Math.round((this.state.nextTime.unix() - this.props.napSnapshot.val().lastTime) / 60)

@@ -67,7 +67,7 @@ export default class NapsControl extends Component {
             {this.getNaps().map((nap, idx) => {
               return (
                   <View key={nap.key()} style={[styles.card, {width: this.props.width, height: this.props.height / 7 * 4}]}>
-                    <NapCard napSnapshot={nap} idx={idx} width={this.props.width} />
+                    <NapCard napSnapshot={nap} idx={idx} width={this.props.width} settingsSnapshot={this.props.settingsSnapshot}/>
                   </View>
               )
             })}
