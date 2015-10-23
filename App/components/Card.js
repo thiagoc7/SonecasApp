@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 10,
     borderRadius: 2,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(34,34,34,0.5)'
   }

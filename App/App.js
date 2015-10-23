@@ -16,7 +16,8 @@ export default class App extends Component {
 
     this.state = {
       user: 'user1',
-      date: moment().format('YYYY-MM-DD')
+      //date: moment().format('YYYY-MM-DD')
+      date: '2015-10-22'
     };
   }
 

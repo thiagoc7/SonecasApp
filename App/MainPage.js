@@ -15,6 +15,7 @@ let {
     } = Dimensions.get('window');
 
 import DateControl from './DateControl'
+import NapsControl from './Naps/NapsControl'
 
 const styles = StyleSheet.create({
   container: {
@@ -33,6 +34,12 @@ export default class MainPage extends Component {
               date={this.props.date}
               onDateChange={this.props.onDateChange}
               width={width}
+          />
+
+          <NapsControl
+              dateSnapshot={this.props.dateSnapshot}
+              width={width}
+              height={height}
           />
         </View>
 
