@@ -64,6 +64,10 @@ export default class MainSync extends Component {
     })
   }
 
+  onDateChange(newDate) {
+    this.setState({dateSnapshot: null}, () => this.props.onDateChange(newDate))
+  }
+
   render() {
     if (!this.state.settingsSnapshot || !this.state.dateSnapshot) {
       return (
@@ -77,7 +81,8 @@ export default class MainSync extends Component {
     }
 
     return <MainPage
-        {...this.props}
+        date={this.props.date}
+        onDateChange={this.onDateChange.bind(this)}
         settingsSnapshot={this.state.settingsSnapshot}
         dateSnapshot={this.state.dateSnapshot}
     />

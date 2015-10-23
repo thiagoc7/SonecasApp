@@ -1,4 +1,5 @@
 import React from 'react-native';
+import Icon from '../../node_modules/react-native-vector-icons/Ionicons';
 
 const {
     Component,
@@ -9,6 +10,8 @@ const {
 import Card from './../components/Card'
 import NapCardTitle from './NapCardTitle'
 import NapCardActions from './NapCardActions'
+import NapCardIntervals from './NapCardIntervals'
+import NapCardTrash from './NapCardTrash'
 
 const styles = StyleSheet.create({
   container: {
@@ -37,8 +40,18 @@ export default class NapCard extends Component {
               />
             </View>
 
-            <View style={{marginTop: 20}}>
-              <NapCardTitle {...this.props}/>
+            <View>
+              <NapCardIntervals
+                  width={this.props.width}
+                  napSnapshot={this.props.napSnapshot}
+              />
+            </View>
+
+            <View>
+              <NapCardTrash
+                  width={this.props.width}
+                  napSnapshot={this.props.napSnapshot}
+              />
             </View>
 
 
@@ -48,16 +61,13 @@ export default class NapCard extends Component {
   }
 
   activeInterval() {
-    console.log(this.props.napSnapshot.key())
     let result = null
     const intervals = this.props.napSnapshot.child('intervals')
     if (intervals.hasChildren()) {
       intervals.forEach(interval => {
-        console.log(interval.val().end)
         if (!interval.val().end) { result = interval }
       })
     }
-    console.log(result)
     return result;
   }
 }
