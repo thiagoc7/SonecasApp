@@ -31,6 +31,7 @@ export default class MainPage extends Component {
         <View style={styles.container}>
           <DateControl
               settingsSnapshot={this.props.settingsSnapshot}
+              dateSnapshot={this.props.dateSnapshot}
               date={this.props.date}
               onDateChange={this.props.onDateChange}
               width={width}

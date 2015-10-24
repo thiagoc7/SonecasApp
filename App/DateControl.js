@@ -5,6 +5,7 @@ import momentPtLocale from 'moment/locale/pt-br';
 
 import SlideControl from './components/SlideControl'
 import Text from './components/Text'
+import Summary from './Summary'
 
 const {
     Component,
@@ -24,6 +25,14 @@ const styles = StyleSheet.create({
 
 export default class DateControl extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      summaryModalVisible: false
+    };
+  }
+
   render() {
     return (
         <View style={[styles.container, {width: this.props.width}]}>
@@ -31,6 +40,13 @@ export default class DateControl extends Component {
           {this.renderDate()}
 
           {this.renderNextNap()}
+
+          <Summary
+              date={this.props.date}
+              dateSnapshot={this.props.dateSnapshot}
+              onModalHide={() => this.setState({summaryModalVisible: false})}
+              modalVisible={this.state.summaryModalVisible}
+          />
 
         </View>
     )
@@ -42,7 +58,7 @@ export default class DateControl extends Component {
             leftIcon="ios-upload-outline"
             plusIcon="chevron-right"
             minusIcon="chevron-left"
-            onPressLeft={() => console.log('export')}
+            onPressLeft={() => this.setState({summaryModalVisible: true})}
             onPressPlus={() => this.props.onDateChange(this.props.date.add(1, 'day'))}
             onPressMinus={() => this.props.onDateChange(this.props.date.subtract(1, 'day'))}
             width={this.props.width}>
@@ -80,6 +96,7 @@ export default class DateControl extends Component {
 DateControl.propTypes = {
   date: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
+  dateSnapshot: React.PropTypes.object.isRequired,
   settingsSnapshot: React.PropTypes.object.isRequired,
   onDateChange: React.PropTypes.func.isRequired
 };

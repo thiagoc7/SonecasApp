@@ -1,5 +1,5 @@
 import React from 'react-native';
-import Icon from '../../node_modules/react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const {
     Component,
@@ -41,7 +41,7 @@ export default class ButtonControl extends Component {
             <Icon name="ios-minus-outline" size={30} color="rgba(217, 217, 217, 0.55)" />
           </TouchableHighlight>
 
-          <Button {...others}>
+          <Button {...others} >
             {children}
           </Button>
 
@@ -62,10 +62,12 @@ ButtonControl.propTypes = {
   onPressPlus: React.PropTypes.func.isRequired,
   onPressMinus: React.PropTypes.func.isRequired,
   height: React.PropTypes.number.isRequired,
-  width: React.PropTypes.number.isRequired
+  width: React.PropTypes.number.isRequired,
+  buttonColor: React.PropTypes.string.isRequired
 };
 
 ButtonControl.defaultProps = {
   height: 50,
-  width: 150
+  width: 150,
+  buttonColor: 'rgba(34,34,34,0.5)'
 };

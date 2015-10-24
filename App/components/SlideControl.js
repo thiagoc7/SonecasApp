@@ -1,6 +1,6 @@
 import React from 'react-native';
 import Swipeout from 'react-native-swipeout';
-import Icon from '../../node_modules/react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const {
     Component,
